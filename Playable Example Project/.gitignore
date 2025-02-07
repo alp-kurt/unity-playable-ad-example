@@ -71,3 +71,18 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Ignore Luna Playable build & cache files
+LunaTemp/
+LunaOutput/
+LunaData/
+LunaPlayground/
+LunaReplay/
+LunaExport/
+LunaLogs/
+LunaCache/
+LunaBuild/
+LunaAnalytics/
+LunaProject/
+*.luna
+*.luna_meta
