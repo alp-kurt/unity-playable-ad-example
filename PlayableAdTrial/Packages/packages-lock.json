@@ -136,7 +136,7 @@
       "url": "https://packages.unity.com"
     },
     "uk.lunalabs.luna": {
-      "version": "file:/Users/pabron/Desktop/games/6.2.1/scripts",
+      "version": "file:../../../6.2.1/scripts",
       "depth": 0,
       "source": "local",
       "dependencies": {}

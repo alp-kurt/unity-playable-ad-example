@@ -128,7 +128,9 @@
                 "Assets/Resources/DOTweenSettings.asset"
             ]
         },
-        "scenes": [],
+        "scenes": [
+            "Assets/Scenes/SampleScene.unity"
+        ],
         "disabledScenes": [],
         "startupScene": 0,
         "packages": {
