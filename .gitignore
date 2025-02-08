@@ -73,19 +73,15 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignore Luna Playable build & cache files
-LunaTemp/
-LunaOutput/
-LunaData/
-LunaPlayground/
-LunaReplay/
-LunaExport/
-LunaLogs/
-LunaCache/
-LunaBuild/
-LunaAnalytics/
-LunaProject/
-*.luna
-*.luna_meta
+# Luna
+Assets/Editor/Luna*
+*.apk
+Assets/Luna*
+LunaTemp
+# Rider
+.idea/
+Assets/Plugins/Editor/Jetbrains/
+Assets/Plugins/Editor/Jetbrains.meta
 
 # Ignore macOS system files
 .DS_Store
