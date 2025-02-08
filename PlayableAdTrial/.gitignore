@@ -85,3 +85,7 @@ Assets/Plugins/Editor/Jetbrains.meta
 
 # Ignore macOS system files
 .DS_Store
+
+#Trial Assets
+#Trial Assets
+/Assets/ThirdParty/AdDeveloper_TrialTask_Assets_012025
