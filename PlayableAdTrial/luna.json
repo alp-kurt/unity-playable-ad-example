@@ -1,0 +1,249 @@
+{
+    "version": "6.2.1",
+    "projectId": "cbf0bfd168876459cbbcbaf0d3645164",
+    "applicationID": 27368,
+    "creativeName": "",
+    "pgServer": "EU",
+    "window": {
+        "‐‵": true
+    },
+    "unity": {
+        "environmentID": 1144181199,
+        "scripts": {
+            "excludes": [
+                "**/Editor/",
+                "**/Luna/RuntimeScripts/",
+                "**/FacebookSDK/",
+                "**/googleads**/",
+                "**/AdMobPlugin/",
+                "**/InMobiAds/",
+                "**/AudienceNetwork/",
+                "**/YandexMobileAds/",
+                "**/Fyber/",
+                "**/FairBid/",
+                "**/AppsFlyer/",
+                "**/IronSource/",
+                "**/Vungle/",
+                "**/NiceVibrations/",
+                "**/GameAnalytics/",
+                "**/UnityAds/",
+                "**/UnityPurchasing/",
+                "**/SupersonicWisdom/",
+                "**/StompyRobot/SRDebugger/",
+                "**/StompyRobot/SRF/",
+                "**/StompyRobot/SROptions/",
+                "**/ThirdParty/Obi/",
+                "**/Obi/",
+                "**/UniWebView/",
+                "**/Plugins/Sirenix/Assemblies/",
+                "**/Plugins/Sirenix/Odin Inspector/",
+                "**/Sirenix/Assemblies/",
+                "**/Sirenix/Odin Inspector/",
+                "**/MeshCombiner/",
+                "**/AnimationBaker/",
+                "Stubs/GameAnalyticsSDK",
+                "Stubs/Facebook.Unity",
+                "Stubs/FacebookGames",
+                "Stubs/FacebookPlatformServiceClient",
+                "Stubs/AdMobPlugin",
+                "Stubs/UnityEngine.Monetization",
+                "Stubs/UnityEngine.Advertisements",
+                "Stubs/UnityEngine.Purchasing",
+                "Stubs/Uniject",
+                "Stubs/InMobiAds",
+                "Stubs/AudienceNetwork",
+                "Stubs/YandexMobileAds",
+                "Stubs/Fyber",
+                "Stubs/GoogleMobileAds",
+                "Stubs/MiniJSON",
+                "Stubs/Firebase",
+                "Stubs/AppsFlyer",
+                "Stubs/IronSource",
+                "Stubs/Vungle",
+                "Stubs/MoreMountains.NiceVibrations",
+                "Stubs/StompyRobot/SRDebugger/",
+                "Stubs/StompyRobot/SRF/",
+                "Stubs/StompyRobot/SROptions/",
+                "Stubs/ThirdParty/Obi/",
+                "Stubs/Obi/",
+                "Stubs/UniWebView/",
+                "Stubs/Plugins/Sirenix/Assemblies/",
+                "Stubs/Plugins/Sirenix/Odin Inspector/",
+                "Stubs/Sirenix/Assemblies/",
+                "Stubs/Sirenix/Odin Inspector/",
+                "Stubs/MeshCombiner/",
+                "Stubs/AnimationBaker/",
+                "Stubs/SupersonicWisdom/"
+            ],
+            "msbuildMac64": "/Library/Frameworks/Mono.framework/Versions/Current/bin/msbuild",
+            "msbuildWin64": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe",
+            "externalSources": [],
+            "externalJSLibraries": [],
+            "scriptingDefines": [],
+            "msbuildVersion": "16.10",
+            "monoVersion": "9.0.1",
+            "dotnetVersion": ""
+        },
+        "assets": {
+            "export": [],
+            "excludes": [
+                "**/Editor/",
+                "**/FacebookSDK/",
+                "**/googleads**/",
+                "**/AdMobPlugin/",
+                "**/InMobiAds/",
+                "**/AudienceNetwork/",
+                "**/YandexMobileAds/",
+                "**/Fyber/",
+                "**/FairBid/",
+                "**/AppsFlyer/",
+                "**/IronSource/",
+                "**/Vungle/",
+                "**/NiceVibrations/",
+                "**/GameAnalytics/",
+                "**/UnityAds/",
+                "**/UnityPurchasing/",
+                "Stubs/GameAnalyticsSDK",
+                "Stubs/Facebook.Unity",
+                "Stubs/FacebookGames",
+                "Stubs/FacebookPlatformServiceClient",
+                "Stubs/AdMobPlugin",
+                "Stubs/UnityEngine.Monetization",
+                "Stubs/UnityEngine.Advertisements",
+                "Stubs/UnityEngine.Purchasing",
+                "Stubs/Uniject",
+                "Stubs/InMobiAds",
+                "Stubs/AudienceNetwork",
+                "Stubs/YandexMobileAds",
+                "Stubs/Fyber",
+                "Stubs/GoogleMobileAds",
+                "Stubs/MiniJSON",
+                "Stubs/Firebase",
+                "Stubs/AppsFlyer",
+                "Stubs/IronSource",
+                "Stubs/Vungle",
+                "Stubs/MoreMountains.NiceVibrations"
+            ],
+            "includes": [
+                "Assets/Resources/DOTweenSettings.asset"
+            ]
+        },
+        "scenes": [],
+        "disabledScenes": [],
+        "startupScene": 0,
+        "packages": {
+            "default": {
+                "applicationName": "",
+                "orientation": "unspecified",
+                "languages": [
+                    "en"
+                ]
+            },
+            "ironsource": {
+                "packageType": 0
+            },
+            "facebook": {
+                "assetID": "",
+                "packageType": 0,
+                "disableCompression": false
+            }
+        },
+        "preloader": {
+            "logo": ""
+        },
+        "enableRealtimeShadows": false,
+        "enableLunaCompilerV2": false,
+        "optimiseShaderVariantsExport": true,
+        "enableMecanimWASM": true,
+        "minify": true,
+        "forceUncompressed": false,
+        "forceBase64": false,
+        "graphicsConstraint": 28,
+        "genericCheck": true,
+        "disableAntiAliasing": true,
+        "forceStableRandomSeed": false,
+        "unusedModules": [],
+        "disableRuntimeAnalysisForCode": true,
+        "disableRuntimeAnalysisForShaders": false,
+        "useShadersCache": true,
+        "preventUpdatingRAListWhenRAIsDisabled": false,
+        "bakeReferenceAmbientProbe": false,
+        "unusedClasses": [],
+        "unusedMethods": [],
+        "stubberDataList": [],
+        "stubberData": {
+            "SDKName": "",
+            "Namespace": "",
+            "className": "",
+            "buildPlatform": "",
+            "enabled": false
+        },
+        "playerPrefs": true,
+        "enableDynamicBatching": false,
+        "forceSourcesBasedCompilation": false
+    },
+    "assets": {
+        "rules": {
+            "texture": {
+                "default": {
+                    "maxWidth": 512,
+                    "maxHeight": 512,
+                    "format": "png32",
+                    "compression": "quantSize",
+                    "quality": 65,
+                    "script": "",
+                    "ext": ""
+                },
+                "overrides": [
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "none",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Resources/unity_builtin_extra/Default-Particle"
+                    }
+                ]
+            },
+            "sound": {
+                "default": {
+                    "channels": 1,
+                    "startTime": "00:00.000",
+                    "endTime": "00:00.000",
+                    "lengthInSeconds": 0.0,
+                    "bitrate": 128,
+                    "script": "",
+                    "ext": ""
+                },
+                "overrides": []
+            },
+            "font": {
+                "default": {
+                    "data": {
+                        "alphabet": " §1234567890-=qwertyuiop[]asdfghjkl;'\\`zxcvbnm,./±!@#$%^&*()_+QWERTYUIOP{}ASDFGHJKL:\"|~ZXCVBNM<>?",
+                        "size": 64,
+                        "textureWidth": 1024,
+                        "textureHeight": 1024
+                    }
+                },
+                "overrides": []
+            },
+            "meshes": {
+                "default": {
+                    "halfPrecision": true
+                },
+                "overrides": []
+            },
+            "animations": {
+                "default": {
+                    "halfPrecision": true
+                },
+                "overrides": []
+            }
+        }
+    },
+    "logLevel_Cs": "error",
+    "logLevel_Js": "trace"
+}
