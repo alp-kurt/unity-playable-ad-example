@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     {
         ScreenOrientationManager.instance.OnLandscapeMode.AddListener(SetLandscapeUI);
         ScreenOrientationManager.instance.OnPortraitMode.AddListener(SetPortraitUI);
+
+        ScreenOrientationManager.instance.CheckScreenOrientation(); // Initial check
     }
 
     void SetLandscapeUI()
