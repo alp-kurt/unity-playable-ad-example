@@ -5,6 +5,13 @@ public class ScreenOrientationManager : MonoBehaviour
 {
     public static ScreenOrientationManager instance;
 
+    [Header("Settings")]
+    [Tooltip("Enable/Disable continuous checking")]
+    [SerializeField] private bool continuousChecking = false; 
+    [Tooltip("Check interval in seconds")]
+    [SerializeField] private float checkInterval = 2f; 
+
+    [Header("Events")]
     public UnityEvent OnLandscapeMode;
     public UnityEvent OnPortraitMode;
 
@@ -17,23 +24,31 @@ public class ScreenOrientationManager : MonoBehaviour
 
     private void Start()
     {
-        CheckScreenOrientation(); // Initial check
-        InvokeRepeating(nameof(CheckScreenOrientation), 0f, 2f); // Check every 2 seconds
+        if (continuousChecking) StartChecking();
+    }
+
+    /// <summary>
+    /// Starts continuous orientation checking if enabled.
+    /// </summary>
+    public void StartChecking()
+    {
+        CancelInvoke(nameof(CheckScreenOrientation)); // Prevent duplicates
+        InvokeRepeating(nameof(CheckScreenOrientation), checkInterval, checkInterval);
     }
 
     /// <summary>
     /// Checks if the screen orientation has changed.
     /// </summary>
-    private void CheckScreenOrientation()
+    public void CheckScreenOrientation()
     {
         float screenRatio = (float)Screen.width / Screen.height;
         bool newIsLandscape = screenRatio >= 1;
 
-        if (newIsLandscape != isLandscape) // trigger when orientation changes
+        if (newIsLandscape != isLandscape) // Only trigger if it changes
         {
             isLandscape = newIsLandscape;
-            TriggerOrientationEvent();
         }
+        TriggerOrientationEvent();
     }
 
     /// <summary>
@@ -44,12 +59,12 @@ public class ScreenOrientationManager : MonoBehaviour
         if (isLandscape)
         {
             OnLandscapeMode?.Invoke();
-            Debug.Log("Switched to Landscape Mode!");
+            Debug.Log("📲 Switched to Landscape Mode!");
         }
         else
         {
             OnPortraitMode?.Invoke();
-            Debug.Log("Switched to Portrait Mode!");
+            Debug.Log("📲 Switched to Portrait Mode!");
         }
     }
 }
