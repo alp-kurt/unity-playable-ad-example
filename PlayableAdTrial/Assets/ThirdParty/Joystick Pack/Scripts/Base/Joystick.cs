@@ -9,10 +9,10 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
-    public float HandleRange
+    public float JoystickHandleRange
     {
-        get { return handleRange; }
-        set { handleRange = Mathf.Abs(value); }
+        get { return joystickHandleRange; }
+        set { joystickHandleRange = Mathf.Abs(value); }
     }
 
     public float DeadZone
@@ -25,14 +25,14 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
 
-    [SerializeField] private float handleRange = 1;
+    [SerializeField] private float joystickHandleRange = 1;
     [SerializeField] private float deadZone = 0;
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
     [SerializeField] private bool snapY = false;
 
     [SerializeField] protected RectTransform background = null;
-    [SerializeField] private RectTransform handle = null;
+    [SerializeField] private RectTransform joystickHandle = null;
     private RectTransform baseRect = null;
 
     private Canvas canvas;
@@ -42,19 +42,30 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     protected virtual void Start()
     {
-        HandleRange = handleRange;
+        JoystickHandleRange = joystickHandleRange;
         DeadZone = deadZone;
         baseRect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+
         if (canvas == null)
             Debug.LogError("The Joystick is not placed inside a canvas");
 
+        // Auto-assign handle if its missing
+        if (joystickHandle == null)
+        {
+            joystickHandle = transform.Find("Handle")?.GetComponent<RectTransform>();
+            if (joystickHandle == null)
+            {
+                Debug.LogError("Joystick Handle is missing! Assign it manually in the Inspector.");
+            }
+        }
+
         Vector2 center = new Vector2(0.5f, 0.5f);
         background.pivot = center;
-        handle.anchorMin = center;
-        handle.anchorMax = center;
-        handle.pivot = center;
-        handle.anchoredPosition = Vector2.zero;
+        joystickHandle.anchorMin = center;
+        joystickHandle.anchorMax = center;
+        joystickHandle.pivot = center;
+        joystickHandle.anchoredPosition = Vector2.zero;
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -73,7 +84,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
-        handle.anchoredPosition = input * radius * handleRange;
+        joystickHandle.anchoredPosition = input * radius * joystickHandleRange;
+
+        Debug.Log($"🎮 Joystick Drag Position: {joystickHandle.anchoredPosition}");
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
@@ -132,7 +145,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public virtual void OnPointerUp(PointerEventData eventData)
     {
         input = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
+        joystickHandle.anchoredPosition = Vector2.zero;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
