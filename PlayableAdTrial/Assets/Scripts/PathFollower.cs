@@ -9,7 +9,7 @@ public class PathFollower : MonoBehaviour
     [SerializeField] private Ease easeType = Ease.Linear;
     [SerializeField] private CharacterAnimationController animationController;
 
-    void Start()
+    private void OnEnable()
     {
         FollowPath();
     }

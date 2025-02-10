@@ -9,7 +9,10 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if (animator == null)
             animator = GetComponent<Animator>();
+    }
 
+    private void OnEnable()
+    {
         PlayWalk();
     }
 
