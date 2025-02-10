@@ -1,4 +1,5 @@
 using UnityEngine;
+using Luna.Unity;
 
 public class CharacterController : MonoBehaviour
 {
@@ -6,62 +7,73 @@ public class CharacterController : MonoBehaviour
     public Joystick joystick;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 3f;
+    [LunaPlaygroundField("Character Speed", 1, "Gameplay Settings")]
+    public float moveSpeed = 3f; 
+
     public float rotationSpeed = 10f;
 
     [Header("References")]
-    public Transform cameraTransform; // Reference to the camera
-
+    public Transform cameraTransform;
     private Rigidbody rb;
     private Animator animator;
+    private string currentAnimation = ""; 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Prevent Rigidbody from affecting rotation
+        rb.freezeRotation = true;
         animator = GetComponent<Animator>();
 
         if (cameraTransform == null)
         {
-            cameraTransform = Camera.main.transform; // Automatically assign main camera if not set
+            cameraTransform = Camera.main.transform;
         }
     }
 
     private void FixedUpdate()
     {
-        // Get input direction from joystick
         Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
 
-        // Convert to world space based on camera orientation
+        if (moveDirection.sqrMagnitude > 0.01f) 
+        {
+            MoveCharacter(moveDirection);
+            SetAnimation("Walk");
+        }
+        else
+        {
+            SetAnimation("Idle");
+        }
+    }
+
+    private void MoveCharacter(Vector3 moveDirection)
+    {
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
-
-        // Flatten the camera vectors to ignore vertical tilt
         cameraForward.y = 0;
         cameraRight.y = 0;
-
-        // Normalize vectors
         cameraForward.Normalize();
         cameraRight.Normalize();
 
-        // Calculate the movement direction relative to the camera
         Vector3 worldMoveDirection = (cameraRight * moveDirection.x + cameraForward * moveDirection.z).normalized;
 
-        // Move Character
         if (worldMoveDirection.magnitude > 0.1f)
         {
-            Vector3 targetPosition = rb.position + worldMoveDirection * moveSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(targetPosition);
+            rb.MovePosition(rb.position + worldMoveDirection * moveSpeed * Time.fixedDeltaTime);
 
-            // Rotate Character
             Quaternion toRotation = Quaternion.LookRotation(worldMoveDirection, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
         }
+    }
 
-        // Play animation
-        if (animator != null)
+    /// <summary>
+    /// Optimized function to switch animations only when needed
+    /// </summary>
+    private void SetAnimation(string newAnimation)
+    {
+        if (currentAnimation != newAnimation) // Prevent redundant animation calls
         {
-            animator.SetFloat("Speed", moveDirection.magnitude);
+            animator.Play(newAnimation);
+            currentAnimation = newAnimation;
         }
     }
 }
