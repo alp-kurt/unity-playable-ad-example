@@ -1,4 +1,5 @@
 using UnityEngine;
+using Luna.Unity;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -6,8 +7,12 @@ public class CameraFollow : MonoBehaviour
     public Transform target; // Player or object to follow
 
     [Header("Camera Offsets")]
-    public Vector3 portraitOffset = new Vector3(0f, 5f, -7f); // Offset for portrait mode
-    public Vector3 landscapeOffset = new Vector3(0f, 3f, -10f); // Offset for landscape mode
+    // Expose these values to Luna Playground
+    [LunaPlaygroundField("Portrait Mode Offset", 0, "Camera Settings")]
+    public Vector3 portraitOffset = new Vector3(4f, 5f, 0f); // Offset for portrait mode
+
+    [LunaPlaygroundField("Landscape Mode Offset", 0, "Camera Settings")]
+    public Vector3 landscapeOffset = new Vector3(3f, 4f, 0f); // Offset for landscape mode
 
     private Vector3 currentOffset; // Stores the active offset
 
@@ -35,6 +40,7 @@ public class CameraFollow : MonoBehaviour
     private void SetPortraitOffset()
     {
         currentOffset = portraitOffset;
+        Debug.Log("Camera switched to Portrait Mode!");
     }
 
     /// <summary>
@@ -43,6 +49,7 @@ public class CameraFollow : MonoBehaviour
     private void SetLandscapeOffset()
     {
         currentOffset = landscapeOffset;
+        Debug.Log("Camera switched to Landscape Mode!");
     }
 
     /// <summary>
