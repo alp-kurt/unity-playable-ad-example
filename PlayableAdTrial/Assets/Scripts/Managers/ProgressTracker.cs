@@ -25,11 +25,6 @@ public class ProgressTracker : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        Analytics.LogEvent(Analytics.EventType.LevelStart);
-    }
-
     /// <summary>
     /// Completes a phase based on the given index.
     /// Logs event to Luna Analytics.
