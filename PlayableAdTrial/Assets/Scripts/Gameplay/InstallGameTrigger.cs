@@ -7,8 +7,13 @@ public class InstallGameTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            Debug.Log("📲 Player entered trigger zone! Opening Install Full Game...");
+            #if UNITY_EDITOR
+            Debug.Log("🛠️ Install Game Triggered!"); return;
+            #endif
+
             Playable.InstallFullGame(); 
         }
+
+
     }
 }
