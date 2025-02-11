@@ -1,60 +1,105 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 using Luna.Unity;
 
 public class BuyComponent : MonoBehaviour
 {
     [Header("Purchase Settings")]
-    [SerializeField] private int price = 100; 
+    [SerializeField] private int price = 100;
     [SerializeField] private GameObject[] componentsToActivate;
     [SerializeField] private int incomeMultiplierIncrease = 0;
     [SerializeField] private string lunaEventName = "Component Bought";
 
-    private bool isPurchased = false; // Prevent multiple purchases
+    [Header("3D Progress Bar Settings")]
+    [SerializeField] private GameObject progressBarUI; // The 3D world-space UI canvas
+    [SerializeField] private Slider progressBar; // The slider inside canvas
+    [SerializeField] private float fillDuration = 1.0f; // Time to fill the bar
+
+    private bool isPurchased = false;
+    private Coroutine progressCoroutine;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isPurchased)
         {
-            if (MoneySystem.instance.CheckBalance(price))
-            {
-                Purchase();
-            }
+            StartProgress();
         }
     }
 
-    /// <summary>
-    /// Handles the purchase process.
-    /// </summary>
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && !isPurchased)
+        {
+            CancelProgress();
+        }
+    }
+
+    private void StartProgress()
+    {
+        if (progressBarUI != null)
+        {
+            progressBarUI.SetActive(true);
+            progressBar.value = 0;
+        }
+
+        if (progressCoroutine == null)
+        {
+            progressCoroutine = StartCoroutine(FillProgressBar());
+        }
+    }
+
+    private void CancelProgress()
+    {
+        if (progressCoroutine != null)
+        {
+            StopCoroutine(progressCoroutine);
+            progressCoroutine = null;
+        }
+
+        if (progressBarUI != null)
+        {
+            progressBarUI.SetActive(false);
+        }
+    }
+
+    private IEnumerator FillProgressBar()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < fillDuration)
+        {
+            progressBar.value = elapsedTime / fillDuration;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        progressBar.value = 1f;
+        Purchase();
+        progressBarUI.SetActive(false);
+        progressCoroutine = null;
+    }
+
     private void Purchase()
     {
         if (MoneySystem.instance.CheckBalance(price))
         {
-            // Deduct money and increase income multiplier
             MoneySystem.instance.DeductMoney(price);
-
-            // INCREASE INCOME LOGIC
             MoneySystem.instance.UpgradeDailyIncome(incomeMultiplierIncrease);
-
-            // Turn on given items
             ActivateItems();
-
-            // Log event in Luna Analytics
             LogLuna();
+            isPurchased = true;
 
-            isPurchased = true; // Prevent multiple purchases
-
-            Notifier.instance.ShowNotification("Purchased successfully!"); // Notify player
-
-            gameObject.SetActive(false); // Disable the trigger after purchase
+            Notifier.instance.ShowNotification("Purchased successfully!");
+            gameObject.SetActive(false);
         }
-        else {
+        else
+        {
             Notifier.instance.ShowNotification("Not enough money!");
         }
     }
 
     private void ActivateItems()
     {
-        // Activate purchased components
         foreach (GameObject obj in componentsToActivate)
         {
             if (obj != null)
@@ -66,7 +111,6 @@ public class BuyComponent : MonoBehaviour
 
     private void LogLuna()
     {
-        // Log event in Luna Analytics
         if (!string.IsNullOrEmpty(lunaEventName))
         {
             Luna.Unity.Analytics.LogEvent(lunaEventName, 1);
