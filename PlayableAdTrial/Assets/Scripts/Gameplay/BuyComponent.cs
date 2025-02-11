@@ -6,7 +6,7 @@ public class BuyComponent : MonoBehaviour
     [Header("Purchase Settings")]
     [SerializeField] private int price = 100; 
     [SerializeField] private GameObject[] componentsToActivate;
-    [SerializeField] private float incomeMultiplierIncrease = 0.2f;
+    [SerializeField] private int incomeMultiplierIncrease = 0;
     [SerializeField] private string lunaEventName = "Component Bought";
 
     private bool isPurchased = false; // Prevent multiple purchases
@@ -33,6 +33,7 @@ public class BuyComponent : MonoBehaviour
             MoneySystem.instance.DeductMoney(price);
 
             // INCREASE INCOME LOGIC
+            MoneySystem.instance.UpgradeDailyIncome(incomeMultiplierIncrease);
 
             // Turn on given items
             ActivateItems();
