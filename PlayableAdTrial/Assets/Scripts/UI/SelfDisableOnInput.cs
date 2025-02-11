@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SelfDisableOnInput : MonoBehaviour
 {
+    [SerializeField] private float duration;
+
     private bool hasInputReceived = false; // Track input
 
     private void Update()
@@ -10,7 +12,7 @@ public class SelfDisableOnInput : MonoBehaviour
         if (!hasInputReceived && (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
         {
             hasInputReceived = true;
-            StartCoroutine(DisableAfterDelay(2f));
+            StartCoroutine(DisableAfterDelay(duration));
         }
     }
 
