@@ -78,7 +78,7 @@ public class MoneySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Increases current money for the given amount.
     /// </summary>
     public void AddMoney(int amount)
     {
@@ -86,7 +86,7 @@ public class MoneySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Reduces current money for the given amount.
     /// </summary>
     /// <param name="amount"></param>
     public void DeductMoney(int amount)
@@ -94,20 +94,24 @@ public class MoneySystem : MonoBehaviour
         if(currentMoney > amount)
         {
             currentMoney -= amount;
-            // buy logic
-            // event signal
+            Notifier.instance.ShowNotification($"Bought! -{amount}$", 2.5f);
         }
         else {
-            // event signal
+            Notifier.instance.ShowNotification("Can't Buy!");
         }
     }
 
+    /// <summary>
+    /// Returns a boolean according to current balance.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     public bool CheckBalance(int amount)
     {
         if (currentMoney > amount)
         {
             return true;
         }
-        else { return false; }
+        else { Notifier.instance.ShowNotification("Not Enough Money!"); return false; }
     }
 }
