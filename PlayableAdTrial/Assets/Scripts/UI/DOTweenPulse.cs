@@ -7,9 +7,17 @@ public class DOTweenPulse : MonoBehaviour
     [SerializeField] private float duration = 1.5f; 
     [SerializeField] private Ease easeType = Ease.InOutSine; 
 
-    private void Start()
+    private Tween pulseTween; // Store tween reference
+
+    private void OnEnable()
     {
         StartPulseAnimation();
+    }
+
+    private void OnDisable()
+    {
+        // Stop animation when object is turned off
+        pulseTween?.Kill();
     }
 
     /// <summary>
@@ -17,8 +25,10 @@ public class DOTweenPulse : MonoBehaviour
     /// </summary>
     private void StartPulseAnimation()
     {
-        transform.DOScale(scaleMultiplier, duration)
-            .SetEase(easeType) // Smooth animation
+
+        // Create a new pulse animation
+        pulseTween = transform.DOScale(scaleMultiplier, duration)
+            .SetEase(easeType) 
             .SetLoops(-1, LoopType.Yoyo);
     }
 }
