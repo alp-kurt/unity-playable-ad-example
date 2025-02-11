@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using Luna.Unity;
+using System.Collections;
 
 /// <summary>
 /// What an unholy way of developing a system, putting everything in a single class...
@@ -12,21 +13,22 @@ public class MoneySystem : MonoBehaviour
     public static MoneySystem instance;
 
     [Header("UI Elements")]
-    public TextMeshProUGUI moneyText;   // Displays the current money
-    public TextMeshProUGUI incomeText;  // Displays the daily income
+    public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI incomeText;
 
     [Header("Money Settings")]
     [LunaPlaygroundField("Base Daily Income", 0, "Economy Settings")]
-    public int baseDailyIncome = 1000;  // The default daily income
+    public int baseDailyIncome = 1000;
 
     [LunaPlaygroundField("Current Daily Income", 0, "Economy Settings")]
-    public int dailyIncome = 1;  // The upgradable daily income
+    public int dailyIncome = 1;
 
     [LunaPlaygroundField("Income Interval (Seconds)", 0, "Economy Settings")]
-    public float incomeInterval = 1.5f;  // Time interval for income collection
+    public float incomeInterval = 1.5f;
 
-    private int currentMoney = 0;  
-    private float incomeMultiplier ;
+    private int currentMoney = 0;
+    private float incomeMultiplier;
+    private bool isProcessingDeduction = false;
 
     private void Awake()
     {
@@ -35,9 +37,24 @@ public class MoneySystem : MonoBehaviour
 
     private void Start()
     {
-        incomeMultiplier = incomeInterval; // Equalize multiplier and interval
-        UpdateIncomeUI(); // Initial UI update
-        InvokeRepeating(nameof(EarnIncome), incomeInterval, incomeInterval);
+        incomeMultiplier = incomeInterval;
+        UpdateIncomeUI();
+        StartCoroutine(IncomeCoroutine());
+    }
+
+    /// <summary>
+    /// Coroutine to handle income increment every interval.
+    /// </summary>
+    private IEnumerator IncomeCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(incomeInterval);
+            if (!isProcessingDeduction) // Prevents conflicts
+            {
+                EarnIncome();
+            }
+        }
     }
 
     /// <summary>
@@ -48,10 +65,11 @@ public class MoneySystem : MonoBehaviour
         int earnedAmount = Mathf.RoundToInt(dailyIncome * incomeMultiplier);
         currentMoney += earnedAmount;
         AnimateMoneyUpdate(earnedAmount);
+        UpdateIncomeUI();
     }
 
     /// <summary>
-    /// Upgrades the daily income by increasing its base value.
+    /// Upgrades the daily income.
     /// </summary>
     public void UpgradeDailyIncome(int amount)
     {
@@ -60,7 +78,7 @@ public class MoneySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the UI for money and income.
+    /// Updates money & income UI.
     /// </summary>
     private void UpdateIncomeUI()
     {
@@ -77,45 +95,62 @@ public class MoneySystem : MonoBehaviour
         DOTween.To(() => startValue, x => moneyText.text = x.ToString(), currentMoney, 0.5f)
             .SetEase(Ease.OutQuad);
 
-        // UI Scale Animation for Feedback
         moneyText.transform.DOScale(2f, 0.2f).SetLoops(2, LoopType.Yoyo);
     }
 
     /// <summary>
-    /// Increases current money for the given amount.
+    /// Increases money manually.
     /// </summary>
     public void AddMoney(int amount)
     {
         currentMoney += amount;
+        UpdateIncomeUI();
     }
 
     /// <summary>
-    /// Reduces current money for the given amount.
+    /// Deducts money safely while avoiding conflicts with income updates.
     /// </summary>
-    /// <param name="amount"></param>
     public void DeductMoney(int amount)
     {
-        if(currentMoney > amount)
+        if (currentMoney >= amount)
         {
-            currentMoney -= amount;
-            Notifier.instance.ShowNotification($"Bought! -{amount}$", 2.5f);
+            StartCoroutine(ProcessDeduction(amount));
         }
-        else {
-            Notifier.instance.ShowNotification("Can't Buy!");
+        else
+        {
+            Notifier.instance.ShowNotification("Not Enough Money!");
         }
     }
 
     /// <summary>
-    /// Returns a boolean according to current balance.
+    /// Handles deduction to prevent conflicts.
     /// </summary>
-    /// <param name="amount"></param>
-    /// <returns></returns>
+    private IEnumerator ProcessDeduction(int amount)
+    {
+        isProcessingDeduction = true; // Prevent income from updating during deduction
+
+        currentMoney -= amount;
+        Notifier.instance.ShowNotification($"Bought! -{amount}$", 2.5f);
+        UpdateIncomeUI();
+
+        yield return new WaitForSeconds(0.2f); // Ensure deduction processes first
+
+        isProcessingDeduction = false; // Allow income updates again
+    }
+
+    /// <summary>
+    /// Returns if balance is sufficient.
+    /// </summary>
     public bool CheckBalance(int amount)
     {
-        if (currentMoney > amount)
+        if (currentMoney >= amount)
         {
             return true;
         }
-        else { Notifier.instance.ShowNotification("Not Enough Money!"); return false; }
+        else
+        {
+            Notifier.instance.ShowNotification("Not Enough Money!");
+            return false;
+        }
     }
 }
