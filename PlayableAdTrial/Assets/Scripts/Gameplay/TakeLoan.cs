@@ -5,6 +5,7 @@ public class TakeLoan : MonoBehaviour
     [Header("Narrative Window")]
     [SerializeField] private GameObject narrativeWindow;
     [SerializeField] private GameObject loan;
+    [SerializeField] private string notificationText;
 
 
     private bool hasTriggered = false; // Ensure it triggers only once
@@ -21,6 +22,7 @@ public class TakeLoan : MonoBehaviour
             Luna.Unity.Analytics.LogEvent($"Loan Taken", 1);
 
             MoneySystem.instance.AddMoney(1000000);
+            Notifier.instance.ShowNotification(notificationText, 1.5f);
 
             gameObject.SetActive(false);
         }
