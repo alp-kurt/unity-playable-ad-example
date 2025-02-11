@@ -3,6 +3,10 @@ using TMPro;
 using DG.Tweening;
 using Luna.Unity;
 
+/// <summary>
+/// What an unholy way of developing a system, putting everything in a single class...
+/// Developed for prototyping purposes. Holds functionalities to be extracted into Single Responsibility modules.
+/// </summary>
 public class MoneySystem : MonoBehaviour
 {
     public static MoneySystem instance;
