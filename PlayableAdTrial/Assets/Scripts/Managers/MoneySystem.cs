@@ -15,6 +15,7 @@ public class MoneySystem : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI incomeText;
+    [SerializeField] private GameObject endGameCard; 
 
     [Header("Money Settings")]
     [LunaPlaygroundField("Base Daily Income", 0, "Economy Settings")]
@@ -29,6 +30,8 @@ public class MoneySystem : MonoBehaviour
     private int currentMoney = 0;
     private float incomeMultiplier;
     private bool isProcessingDeduction = false;
+
+    private int winCondition = 1000001;
 
     private void Awake()
     {
@@ -53,6 +56,7 @@ public class MoneySystem : MonoBehaviour
             if (!isProcessingDeduction) // Prevents conflicts
             {
                 EarnIncome();
+                CheckWinCondition(); // Check win condition every income update
             }
         }
     }
@@ -105,6 +109,7 @@ public class MoneySystem : MonoBehaviour
     {
         currentMoney += amount;
         UpdateIncomeUI();
+        CheckWinCondition(); // Check win condition when manually adding money
     }
 
     /// <summary>
@@ -151,6 +156,30 @@ public class MoneySystem : MonoBehaviour
         {
             Notifier.instance.ShowNotification("Not Enough Money!");
             return false;
+        }
+    }
+
+    /// <summary>
+    /// Checks if the player has reached 1 million money.
+    /// </summary>
+    private void CheckWinCondition()
+    {
+        if (currentMoney >= winCondition)
+        {
+            TriggerEndGame();
+        }
+    }
+
+    /// <summary>
+    /// Ends the game when the win condition is met.
+    /// </summary>
+    private void TriggerEndGame()
+    {
+        if (endGameCard != null)
+        {
+            endGameCard.SetActive(true);
+            Luna.Unity.Analytics.LogEvent("Game Completed", 1);
+            Debug.Log("🎉 Game Completed! End Card Activated.");
         }
     }
 }
