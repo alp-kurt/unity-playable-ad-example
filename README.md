@@ -3,6 +3,7 @@
 
 **This is a fully interactive playable ad** built for a trial task, developed using **Unity WebGL and Luna Playable API**. It showcases **engaging gameplay, optimized performance, and smooth UI/UX interactions** within a **lightweight, ad-friendly environment**.
 
+![Playable Ad Preview](images/playable-ad-trial.gif)
 ---
 
 ## Play the Playable Ad 
