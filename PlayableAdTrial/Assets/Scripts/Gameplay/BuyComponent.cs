@@ -12,9 +12,9 @@ public class BuyComponent : MonoBehaviour
     [SerializeField] private string lunaEventName = "Component Bought";
 
     [Header("3D Progress Bar Settings")]
-    [SerializeField] private GameObject progressBarUI; // The 3D world-space UI canvas
-    [SerializeField] private Slider progressBar; // The slider inside canvas
-    [SerializeField] private float fillDuration = 1.0f; // Time to fill the bar
+    [SerializeField] private GameObject progressBarUI; 
+    [SerializeField] private Slider progressBar; 
+    [SerializeField] private float fillDuration = 1.0f; 
 
     private bool isPurchased = false;
     private Coroutine progressCoroutine;
@@ -89,7 +89,15 @@ public class BuyComponent : MonoBehaviour
             LogLuna();
             isPurchased = true;
 
-            Notifier.instance.ShowNotification("Purchased successfully!");
+            if(incomeMultiplierIncrease == 0)
+            {
+                Notifier.instance.ShowNotification($"Bought! -{price}$");
+            }
+            else
+            {
+                Notifier.instance.ShowNotification($"+{incomeMultiplierIncrease}$ Daily Income!");
+            }
+            
             gameObject.SetActive(false);
         }
         else
