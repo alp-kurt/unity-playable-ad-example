@@ -63,7 +63,7 @@ public class TutorialTextController : MonoBehaviour
         tutorialText.DOColor(Color.green, 0.3f);
 
         // Wait 1.5 seconds before changing text
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.8f);
 
         // Change text & reset color to white
         tutorialText.DOColor(Color.white, 0.3f);
