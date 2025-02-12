@@ -15,7 +15,7 @@ public class MoneySystem : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI incomeText;
-    [SerializeField] private GameObject endGameCard; 
+    [SerializeField] private GameObject endGameCard;
 
     [Header("Money Settings")]
     [LunaPlaygroundField("Base Daily Income", 0, "Economy Settings")]
@@ -32,6 +32,7 @@ public class MoneySystem : MonoBehaviour
     private bool isProcessingDeduction = false;
 
     private int winCondition = 1000001;
+    private bool hasGameEnded = false; 
 
     private void Awake()
     {
@@ -56,7 +57,7 @@ public class MoneySystem : MonoBehaviour
             if (!isProcessingDeduction) // Prevents conflicts
             {
                 EarnIncome();
-                CheckWinCondition(); // Check win condition every income update
+                CheckWinCondition();
             }
         }
     }
@@ -109,7 +110,7 @@ public class MoneySystem : MonoBehaviour
     {
         currentMoney += amount;
         UpdateIncomeUI();
-        CheckWinCondition(); // Check win condition when manually adding money
+        CheckWinCondition();
     }
 
     /// <summary>
@@ -164,8 +165,9 @@ public class MoneySystem : MonoBehaviour
     /// </summary>
     private void CheckWinCondition()
     {
-        if (currentMoney >= winCondition)
+        if (!hasGameEnded && currentMoney >= winCondition) 
         {
+            hasGameEnded = true;
             TriggerEndGame();
         }
     }
