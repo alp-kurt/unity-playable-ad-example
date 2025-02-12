@@ -14,6 +14,8 @@ public class TakeLoan : MonoBehaviour
 
         loan.SetActive(false); //Turn off the money object
 
+        TutorialTextController.instance.UpdateText("Drag To Move");
+
         gameObject.SetActive(false);
     }
 }
