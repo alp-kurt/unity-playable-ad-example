@@ -7,7 +7,7 @@
 ---
 
 ## Play the Playable Ad 
-[👉 Click here to play](https://pabron7.github.io/unity-playable-ad-example/)
+[👉 Click here to play](https://alp-kurt.github.io/unity-playable-ad-example/)
 
 **Luna Playable Ad (Editor Test Not Possible)**  
 1. Clone the repository  
